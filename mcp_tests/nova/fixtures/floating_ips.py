@@ -19,7 +19,7 @@ Floating IP fixtures.
 
 import pytest
 
-from mos_tests.nova.steps import FloatingIpSteps
+from mcp_tests.nova.steps import FloatingIpSteps
 
 __all__ = [
     'nova_create_floating_ip',

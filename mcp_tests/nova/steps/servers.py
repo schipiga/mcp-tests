@@ -17,9 +17,10 @@ Server steps.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from mos_tests.functions.common import wait
-from mos_tests.ssh import SshClient
-from mos_tests.steps import BaseSteps, step
+from waiting import wait
+
+from mcp_tests.ssh import SshClient
+from mcp_tests.steps import BaseSteps, step
 
 __all__ = [
     'ServerSteps'
@@ -124,10 +125,11 @@ class ServerSteps(BaseSteps):
         def predicate():
             try:
                 ssh_client.connect()
-                ssh_client.close()
                 return True
             except Exception:
                 return False
+            finally:
+                ssh_client.close()
 
         wait(predicate, timeout_seconds=timeout)
 

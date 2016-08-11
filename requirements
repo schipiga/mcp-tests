@@ -11,3 +11,4 @@ python-muranoclient>=0.8.3
 requests>=2.2.0
 six
 waiting
+ipdb

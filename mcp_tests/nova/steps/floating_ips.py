@@ -17,8 +17,9 @@ Floating IP steps.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from mos_tests.functions.common import wait
-from mos_tests.steps import BaseSteps, step
+from waiting import wait
+
+from mcp_tests.steps import BaseSteps, step
 
 __all__ = [
     'FloatingIpSteps'

@@ -20,10 +20,9 @@ Glance fixtures.
 from glanceclient.v2.client import Client
 import pytest
 
-from mos_tests.functions import file_cache
-from mos_tests.glance.steps import GlanceSteps
-from mos_tests import settings
-from mos_tests.utils import generate_ids
+from mcp_tests.glance.steps import GlanceSteps
+from mcp_tests import config
+from mcp_tests.utils import generate_ids, get_file_path
 
 __all__ = [
     'create_image',
@@ -81,5 +80,5 @@ def create_image(create_images):
 def ubuntu_image(create_image):
     """Fixture to create image with default options before test."""
     image_name = next(generate_ids('ubuntu'))
-    image_path = file_cache.get_file_path(settings.UBUNTU_QCOW2_URL)
+    image_path = get_file_path(config.UBUNTU_QCOW2_URL)
     return create_image(image_name, image_path)

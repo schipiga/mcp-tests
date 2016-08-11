@@ -20,8 +20,8 @@ Neutron fixtures.
 from neutronclient.v2_0.client import Client
 import pytest
 
-from mos_tests.neutron.steps import NeutronSteps
-from mos_tests.utils import generate_ids
+from mcp_tests.neutron.steps import NeutronSteps
+from mcp_tests.utils import generate_ids
 
 __all__ = [
     'create_network',

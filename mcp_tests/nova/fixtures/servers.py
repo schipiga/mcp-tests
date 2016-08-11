@@ -19,8 +19,8 @@ Server fixtures.
 
 import pytest
 
-from mos_tests.nova.steps import ServerSteps
-from mos_tests.utils import generate_ids
+from mcp_tests.nova.steps import ServerSteps
+from mcp_tests.utils import generate_ids
 
 __all__ = [
     'create_server',

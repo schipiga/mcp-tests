@@ -17,8 +17,9 @@ Neutron steps.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from mos_tests.functions.common import wait
-from mos_tests.steps import BaseSteps, step
+from waiting import wait
+
+from mcp_tests.steps import BaseSteps, step
 
 __all__ = [
     "NeutronSteps"
@@ -74,6 +75,7 @@ class NeutronSteps(BaseSteps):
         return self._client.list_ports(
             mac_address=mac)['ports'][0]['network_id']
 
+    # TODO (schipiga): need refactor it after copy from mos-integration-tests.
     @step
     def dhcp_host_by_network(self, net_id, filter_attr='host', is_alive=True):
         """Step to get DHCP host name by network ID."""

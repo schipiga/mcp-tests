@@ -19,8 +19,8 @@ Keypair fixtures.
 
 import pytest
 
-from mos_tests.nova.steps import KeypairSteps
-from mos_tests.utils import generate_ids
+from mcp_tests.nova.steps import KeypairSteps
+from mcp_tests.utils import generate_ids
 
 __all__ = [
     'create_keypair',
