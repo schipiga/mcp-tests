@@ -22,6 +22,7 @@ import re
 
 from mcp_tests.fixtures import *  # noqa
 from mcp_tests.glance.conftest import *  # noqa
+from mcp_tests.keystone.conftest import *  #noqa
 from mcp_tests.neutron.conftest import *  # noqa
 from mcp_tests.nova.conftest import *  # noqa
 from mcp_tests.steps import STEPS

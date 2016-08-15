@@ -42,7 +42,7 @@ def glance_client(session):
 @pytest.fixture
 def glance_steps(glance_client):
     """Fixture to get glance steps."""
-    return GlanceSteps(glance_client.images)
+    return GlanceSteps(glance_client)
 
 
 @pytest.yield_fixture

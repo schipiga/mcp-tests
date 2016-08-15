@@ -33,9 +33,10 @@ class GlanceSteps(BaseSteps):
     def create_image(self, image_name, image_path, disk_format='qcow2',
                      container_format='bare', check=True):
         """Step to create image."""
-        image = self._client.create(name=image_name, disk_format=disk_format,
-                                    container_format=container_format)
-        self._client.upload(image.id, open(image_path, 'rb'))
+        image = self._client.images.create(name=image_name,
+                                           disk_format=disk_format,
+                                           container_format=container_format)
+        self._client.images.upload(image.id, open(image_path, 'rb'))
 
         if check:
             self.check_image_status(image, 'active', timeout=180)
@@ -45,7 +46,7 @@ class GlanceSteps(BaseSteps):
     @step
     def delete_image(self, image, check=True):
         """Step to delete image."""
-        self._client.delete(image.id)
+        self._client.images.delete(image.id)
 
         if check:
             self.check_image_presence(image, present=False, timeout=180)
@@ -77,11 +78,23 @@ class GlanceSteps(BaseSteps):
                 self.check_image_presence(image, present=False, timeout=180)
 
     @step
+    def bind_project(self, image, project, check=True):
+        """Step to bind image to project."""
+        self._client.image_members.create(image.id, project.id)
+        self.check_image_bind_status(image, project)
+
+    @step
+    def unbind_project(self, image, project, check=True):
+        """Step to unbind image to project."""
+        self._client.image_members.delete(image.id, project.id)
+        self.check_image_bind_status(image, project, binded=False)
+
+    @step
     def check_image_presence(self, image, present=True, timeout=0):
-        """Verify step to check image is present."""
+        """Check step image is present."""
         def predicate():
             try:
-                self._client.get(image.id)
+                self._client.images.get(image.id)
                 return present
             except Exception:
                 return not present
@@ -90,9 +103,23 @@ class GlanceSteps(BaseSteps):
 
     @step
     def check_image_status(self, image, status, timeout=0):
-        """Verify step to check image status."""
+        """Check step image status."""
         def predicate():
-            image.update(self._client.get(image.id))
+            image.update(self._client.images.get(image.id))
             return image.status.lower() == status.lower()
+
+        wait(predicate, timeout_seconds=timeout)
+
+    @step
+    def check_image_bind_status(self, image, project, binded=True, timeout=0):
+        """Check step image binding status."""
+        def predicate():
+            members = self._client.image_members.list(image.id)
+            member_ids = [member['member_id'] for member in members]
+
+            if binded:
+                return project.id in member_ids
+            else:
+                return project.id not in member_ids
 
         wait(predicate, timeout_seconds=timeout)
