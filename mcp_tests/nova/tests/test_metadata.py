@@ -18,7 +18,7 @@ Server metadata tests.
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from mos_tests.utils import generate_ids
+from mcp_tests.utils import generate_ids
 
 
 def test_metadata_reach_all_booted_vm(security_group, nova_floating_ip,
