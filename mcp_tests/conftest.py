@@ -17,52 +17,13 @@ Global conftest.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import inspect
-import re
-
 from mcp_tests.fixtures import *  # noqa
 from mcp_tests.glance.conftest import *  # noqa
-from mcp_tests.keystone.conftest import *  #noqa
+from mcp_tests.keystone.conftest import *  # noqa
 from mcp_tests.neutron.conftest import *  # noqa
 from mcp_tests.nova.conftest import *  # noqa
-from mcp_tests.steps import STEPS
 
-REGEX_CALL = re.compile('\W*(\w+)\(')
-
-
-def pytest_collection_modifyitems(config, items):
-    """Hook to detect forbidden calls inside test."""
-    errors = []
-    for item in items:
-        fixtures = item.funcargnames
-        permitted_calls = STEPS + fixtures
-
-        test_name = item.function.__name__
-        file_name = inspect.getsourcefile(item.function)
-        source_lines = inspect.getsourcelines(item.function)[0]
-
-        while source_lines:
-            def_line = source_lines.pop(0).strip()
-            if def_line.startswith('def '):
-                break
-
-        for line in source_lines:
-            line = line.strip()
-            if line.startswith('#'):
-                continue
-
-            result = REGEX_CALL.search(line)
-            if not result:
-                continue
-
-            call_name = result.group(1)
-            if call_name not in permitted_calls:
-
-                error = 'Calling {!r} in test {!r} in file {!r}'.format(
-                    call_name, test_name, file_name)
-                errors.append(error)
-
-    if errors:
-        raise SystemError(
-            "Only steps and fixtures must be called in test!\n{}".format(
-                '\n'.join(errors)))
+pytest_plugins = [
+    'third_party.steps_checker',
+    'third_party.testrail_id'
+]

@@ -43,6 +43,5 @@ def test_share_glance_image(ubuntu_image, project, glance_steps):
         8. Check that image deleted
 
     """
-
     glance_steps.bind_project(ubuntu_image, project)
     glance_steps.unbind_project(ubuntu_image, project)

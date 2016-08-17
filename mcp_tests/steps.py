@@ -23,7 +23,12 @@ __all__ = [
     'STEPS'
 ]
 
-STEPS = []
+# predefined permitted calls
+STEPS = [
+    'next',
+    'range',
+    'set_trace'
+]
 
 
 def step(func):
