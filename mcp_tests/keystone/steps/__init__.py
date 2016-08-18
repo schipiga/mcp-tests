@@ -20,10 +20,12 @@ Keystone steps package.
 
 from .domains import *  # noqa
 from .projects import *  # noqa
+from .roles import *  # noqa
 from .users import *  # noqa
 
 __all_ = [
     'DomainSteps',
     'ProjectSteps',
+    'RoleSteps',
     'UserSteps'
 ]
