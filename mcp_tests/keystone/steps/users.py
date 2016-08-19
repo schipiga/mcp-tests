@@ -48,8 +48,21 @@ class UserSteps(BaseSteps):
             self.check_user_presence(user, present=False)
 
     @step
+    def find_user(self, *args, **kwgs):
+        """Step to find user."""
+        return self._client.find(*args, **kwgs)
+
+    @step
+    def get_users(self, check=True):
+        """Step to get users."""
+        users = list(self._client.list())
+        if check:
+            assert users
+        return users
+
+    @step
     def check_user_presence(self, user, present=True, timeout=0):
-        """Verify step to check user is present."""
+        """Check step that user is present."""
         def predicate():
             try:
                 self._client.get(user.id)

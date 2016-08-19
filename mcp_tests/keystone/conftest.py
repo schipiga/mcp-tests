@@ -30,6 +30,12 @@ __all__ = [
     'project_steps',
     'project',
 
+    'admin_role',
+    'create_role',
+    'role_steps',
+    'role',
+
+    'admin',
     'create_user',
     'user_steps',
     'user'

@@ -48,6 +48,14 @@ class ProjectSteps(BaseSteps):
             self.check_project_presence(project, present=False)
 
     @step
+    def get_projects(self, check=True):
+        """Step to get projects."""
+        projects = list(self._client.list())
+        if check:
+            assert projects
+        return projects
+
+    @step
     def check_project_presence(self, project, present=True, timeout=0):
         """Verify step to check project is present."""
         def predicate():

@@ -23,6 +23,7 @@ from mcp_tests.keystone.steps import UserSteps
 from mcp_tests.utils import generate_ids
 
 __all__ = [
+    'admin',
     'create_user',
     'user_steps',
     'user'
@@ -60,3 +61,9 @@ def user(create_user):
     user_name = next(generate_ids('user'))
     password = next(generate_ids('password'))
     return create_user(user_name, password)
+
+
+@pytest.fixture
+def admin(user_steps):
+    """Fixture to get admin user."""
+    return user_steps.find_user(name='admin')

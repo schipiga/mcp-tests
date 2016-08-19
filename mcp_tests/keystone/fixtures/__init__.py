@@ -20,9 +20,10 @@ Keystone fixtures package.
 from .domains import *  # noqa
 from .keystone import *  # noqa
 from .projects import *  # noqa
+from .roles import *  # noqa
 from .users import *  # noqa
 
-__all_ = [
+__all__ = [
     'create_domain',
     'domain_steps',
     'domain',
@@ -33,6 +34,12 @@ __all_ = [
     'project_steps',
     'project',
 
+    'admin_role',
+    'create_role',
+    'role_steps',
+    'role',
+
+    'admin',
     'create_user',
     'user_steps',
     'user'
