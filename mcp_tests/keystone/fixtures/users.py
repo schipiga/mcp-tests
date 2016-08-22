@@ -23,10 +23,17 @@ from mcp_tests.keystone.steps import UserSteps
 from mcp_tests.utils import generate_ids
 
 __all__ = [
+    'admin',
     'create_user',
     'user_steps',
     'user'
 ]
+
+
+@pytest.fixture
+def admin(user_steps):
+    """Fixture to get admin."""
+    return user_steps.find_user(name='admin')
 
 
 @pytest.fixture
